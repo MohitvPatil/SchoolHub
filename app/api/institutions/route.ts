@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       `;
     }
 
-    const [institutions, [{ total }]] = await Promise.all([
+    const [institutions, [{total}]] = await Promise.all([
       conn.execute(query, params),
       conn.execute(countQuery, rating ? countParams : countParams.slice(0, -1))
     ]);

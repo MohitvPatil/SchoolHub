@@ -11,6 +11,29 @@ import Link from 'next/link';
 export default function AddInstitutionPage() {
   const [selectedType, setSelectedType] = useState<'School' | 'College' | null>(null);
 
+  const institutionCards = [
+    {
+      type: 'School' as const,
+      icon: School,
+      title: 'Add School',
+      description:
+        'Add primary and secondary schools with curriculum details, patterns, and facilities.',
+      features: ['Standards offered', 'Curriculum pattern', 'Medium of instruction', 'Principal details'],
+      gradient: 'from-blue-500 to-cyan-500',
+      path: '/add-institution/school',
+    },
+    {
+      type: 'College' as const,
+      icon: GraduationCap,
+      title: 'Add College',
+      description:
+        'Add colleges and universities with course information, specializations, and faculty details.',
+      features: ['Field of study', 'Specializations', 'University type', 'Dean information'],
+      gradient: 'from-purple-500 to-pink-500',
+      path: '/add-institution/college',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
       {/* Header */}
@@ -61,24 +84,7 @@ export default function AddInstitutionPage() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  type: 'School' as const,
-                  icon: School,
-                  title: 'Add School',
-                  description: 'Add primary and secondary schools with curriculum details, patterns, and facilities.',
-                  features: ['Standards offered', 'Curriculum pattern', 'Medium of instruction', 'Principal details'],
-                  gradient: 'from-blue-500 to-cyan-500',
-                },
-                {
-                  type: 'College' as const,
-                  icon: GraduationCap,
-                  title: 'Add College',
-                  description: 'Add colleges and universities with course information, specializations, and faculty details.',
-                  features: ['Field of study', 'Specializations', 'University type', 'Dean information'],
-                  gradient: 'from-purple-500 to-pink-500',
-                },
-              ].map(({ type, icon: Icon, title, description, features, gradient }) => (
+              {institutionCards.map(({ type, icon: Icon, title, description, features, gradient, path }) => (
                 <motion.div
                   key={type}
                   whileHover={{ y: -5, scale: 1.02 }}
@@ -86,7 +92,6 @@ export default function AddInstitutionPage() {
                 >
                   <Card 
                     className="h-full cursor-pointer group hover:shadow-2xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800"
-                    onClick={() => setSelectedType(type)}
                   >
                     <CardHeader className="text-center pb-4">
                       <div className={`mx-auto p-4 rounded-2xl bg-gradient-to-br ${gradient} mb-4 group-hover:scale-110 transition-transform`}>
@@ -115,12 +120,13 @@ export default function AddInstitutionPage() {
                         </ul>
                       </div>
                       
-                      <Button 
-                        className={`w-full bg-gradient-to-r ${gradient} hover:opacity-90 text-white border-0 py-6 text-lg font-medium group-hover:scale-105 transition-transform`}
-                        onClick={() => setSelectedType(type)}
-                      >
-                        Choose {title}
-                      </Button>
+                      <Link href={path}>
+                        <Button 
+                          className={`w-full bg-gradient-to-r ${gradient} hover:opacity-90 text-white border-0 py-6 text-lg font-medium group-hover:scale-105 transition-transform`}
+                        >
+                          {title}
+                        </Button>
+                      </Link>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -139,16 +145,7 @@ export default function AddInstitutionPage() {
               </div>
             </div>
           </motion.div>
-        ) : (
-          // This will be handled by the respective form components
-          <div>
-            {selectedType === 'School' ? (
-              <div>School form will be rendered here</div>
-            ) : (
-              <div>College form will be rendered here</div>
-            )}
-          </div>
-        )}
+        ) : null}
       </main>
     </div>
   );

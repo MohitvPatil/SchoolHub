@@ -17,6 +17,7 @@ import { schoolSchema, SchoolFormData } from '@/lib/validation';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
 export default function AddSchoolPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
